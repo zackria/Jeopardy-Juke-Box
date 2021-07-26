@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Zack's Jeopardy Juke Box</title>
+    <link href="./shadow.css" rel="stylesheet">
+    <link href="./material.css" rel="stylesheet">
+    <style>
+      #assessment {
+        font-family: 'Shadows Into Light', cursive;
+        width: 450px;
+        border: 1px solid #ccc;
+        background-color: #fbfbfb;
+        padding: 10px;
+        box-shadow: 2px 2px #ccc;
+      }
+
+      #assessment h1 {
+        margin-top: 0px;
+      }
+
+      #assessment button {
+        width: 100%;
+        height: 30px;
+        margin-top: 8px;
+        border-radius: 5px;
+        background-color: #999;
+        color: #333;
+        font-size: 1.15em;
+
+      }
+
+
+
+    </style>
+  </head>
+  <body>
+      <audio id="sound">
+          <source src="Correct_Ding.mp3" />
+      </audio>
+      <audio id="wrongSound">
+          <source src="Fail_Sound.mp3" />
+      </audio>
+
+      <audio id="wrongSound2">
+          <source src="Wrong_Answer.mp3" />
+      </audio>
+
+      <audio id="30Seconds">
+          <source src="30_second_timer_with_jeopardy_thinking_music.mp3" />
+      </audio>
+
+
+      <audio id="60Seconds">
+          <source src="simple_countdown_with_jeopardy_think_music_60Sec.mp3" />
+      </audio>
+
+
+      <audio id="applaudMusic">
+          <source src="Crowd_Applaud.mp3" />
+      </audio>
+
+      <audio id="dailyDouble">
+          <source src="Joepardy_Daily_Double.mp3" />
+      </audio>
+
+      <div id="assessment">
+        <h1>Zack's Jeopardy Juke Box</h1>
+      <button id="correct">Correct</button>
+      <button id="wrong">Wrong</button>
+      <button id="wrong2">Wrong2</button>
+&nbsp;<br/>
+      <button id="dailyDoubeBtn">Daily Double</button>
+&nbsp;<br/>
+      <button id="applaud">Applaud Start</button>
+      <button id="applaudStop" onclick="stopApplaud()">Applaud Stop</button>
+&nbsp;<br/>
+      30 Second Timer (<b><span id="time1">0</span> seconds remaining</b>)
+      <button style="font-size:24px" id="playButton"> <i class="material-icons">play_arrow</i></button>
+
+      <button style="font-size:24px" id="stopButton"> <i class="material-icons">stop</i></button>
+      
+      60 Second Timer (<b><span id="time2">0</span> seconds remaining</b>)
+      <button style="font-size:24px" id="playButton60"> <i class="material-icons">play_arrow</i></button>
+
+      <button style="font-size:24px" id="stopButton60"> <i class="material-icons">stop</i></button>
+
+      </div>
+
+     
+
+
+  </body>
+  <script>
+      const mySound = document.getElementById("sound");
+      const correctButton = document.getElementById("correct");
+      const wrong = document.getElementById("wrong");
+      const wrong2 = document.getElementById("wrong2");
+      const applaud = document.getElementById("applaud");
+
+      const dailyDoubleSound = document.getElementById("dailyDouble");
+      const dailyDoubeButton = document.getElementById("dailyDoubeBtn");
+      
+      const thirtySeconds = document.getElementById("30Seconds");
+      const playButton = document.getElementById("playButton");
+      const stopButton = document.getElementById("stopButton");
+
+      const sixtySeconds = document.getElementById("60Seconds");
+      const playButton60 = document.getElementById("playButton60");
+      const stopButton60 = document.getElementById("stopButton60");
+
+      correctButton.addEventListener("click", function(){
+        mySound.play();
+      })
+
+      dailyDoubeButton.addEventListener("click", function(){
+        dailyDoubleSound.play();
+      })
+
+      wrong.addEventListener("click", wrongAnswer);
+
+      function wrongAnswer(e){
+          document.getElementById("wrongSound").play();
+      }
+
+       wrong2.addEventListener("click", wrong2Answer);
+
+      function wrong2Answer(e){
+          document.getElementById("wrongSound2").play();
+      }
+
+      applaud.addEventListener("click", applaudSound);
+
+      function applaudSound(e){
+          document.getElementById("applaudMusic").play();
+      }
+
+      function stopApplaud()
+      {
+        document.getElementById("applaudMusic").pause();
+        document.getElementById("applaudMusic").currentTime = 0;
+      }
+
+      var timeLeft = 30;
+
+      var timerId = null;
+
+      playButton.addEventListener("click", function(){
+        thirtySeconds.play();
+        timeLeft = 30;
+        timerId = setInterval(countdown, 1000);
+      })
+
+      stopButton.addEventListener("click", function(){
+        thirtySeconds.pause();
+        thirtySeconds.currentTime = 0;
+         clearTimeout(timerId);
+         timeLeft = 0;
+        document.getElementById("time1").innerHTML = 0 + ' seconds remaining';
+      })
+
+      function countdown() {
+        if (timeLeft == -1) {
+            clearTimeout(timerId);
+        } else {
+            document.getElementById("time1").innerHTML = timeLeft + ' seconds remaining';
+            timeLeft--;
+        }
+      }
+
+
+      var timeLeft60 = 60;
+
+      var timerId60 = null;
+
+      playButton60.addEventListener("click", function(){
+        sixtySeconds.play();
+        timeLeft60 = 60;
+        timerId60 = setInterval(countdown60, 1000);
+      })
+
+      stopButton60.addEventListener("click", function(){
+        sixtySeconds.pause();
+        sixtySeconds.currentTime = 0;
+         clearTimeout(timerId60);
+         timeLeft60 = 0;
+        document.getElementById("time2").innerHTML = 0 + ' seconds remaining';
+      })
+
+      function countdown60() {
+        if (timeLeft60 == -1) {
+            clearTimeout(timerId60);
+        } else {
+            document.getElementById("time2").innerHTML = timeLeft60 + ' seconds remaining';
+            timeLeft60--;
+        }
+      }
+
+  </script>
+</html>
