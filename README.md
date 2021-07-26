@@ -1,6 +1,8 @@
 # Jeopardy-Juke-Box Build Instructions
 
-#### check that Node.js was installed correctly, type the following commands in your terminal client:
+# You can build .exe for Windows or App for Mac with this
+
+#### Check that Node.js was installed correctly, type the following commands in your terminal client:
 
 `node -v`
 
